@@ -11,7 +11,6 @@
         <module name="chapter_003" />
         <module name="chapter_002" />
         <module name="chapter_001" />
-        <module name="job4j_design" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
