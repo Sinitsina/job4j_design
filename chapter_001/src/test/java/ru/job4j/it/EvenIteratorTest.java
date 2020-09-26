@@ -59,15 +59,11 @@ public class EvenIteratorTest {
     }
 
     @Test
-    public void allNumbersAreEven2() {
+    public void TwoOfFourNumbersAreEven() {
         it = new EvenIterator(new int[] {2, 5, 7, 8});
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(8));
-        //assertThat(it.hasNext(), is(true));
-        //assertThat(it.next(), is(6));
-        //assertThat(it.hasNext(), is(true));
-        //assertThat(it.next(), is(8));
     }
 }
