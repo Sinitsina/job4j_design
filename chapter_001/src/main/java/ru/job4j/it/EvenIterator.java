@@ -27,10 +27,10 @@ public class EvenIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        for (int i = 0; i < numbers.length-1; i++) {
+        for (int i = 0; i < numbers.length - 1; i++) {
             if (checkIfArrayHasEvenNumbers(point)) {
                 if (!numberIsEven(point)) {
-                    while (!numberIsEven(point) && point < numbers.length-1) {
+                    while (!numberIsEven(point) && point < numbers.length - 1) {
                         point++;
                     }
                 }
