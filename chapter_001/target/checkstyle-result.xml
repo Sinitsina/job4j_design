@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.29">
 <file name="G:\Programs\IntelliJ IDEA Community Edition 2020.1.1\projects\job4j_design\chapter_001\src\main\java\ru\job4j\it\EvenIterator.java">
-<error line="19" severity="error" message="&apos;METHOD_DEF&apos; has more than 1 empty lines before." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
+</file>
+<file name="G:\Programs\IntelliJ IDEA Community Edition 2020.1.1\projects\job4j_design\chapter_001\src\main\java\ru\job4j\it\MatrixIt.java">
 </file>
 </checkstyle>
