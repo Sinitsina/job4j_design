@@ -15,7 +15,6 @@ public class EvenIterator implements Iterator<Integer> {
         return numbers[point] % 2 == 0;
     }
 
-
     @Override
     public boolean hasNext() {
         while (point < numbers.length) {
