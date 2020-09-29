@@ -41,8 +41,18 @@ public class SimpleArrayTest {
         strings.add("first");
         strings.add("second");
         strings.add("third");
-        strings.remove(1);
-        String rsl = strings.get(1);
-        assertThat(rsl, is("third"));
+        SimpleArray<String> result = strings.remove(0);
+        String rsl = result.get(0);
+        assertThat(rsl, is("second"));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenIndexForSetOutOfBounds() {
+        String[] array = new String[3];
+        SimpleArray<String> strings = new SimpleArray<>(array);
+        strings.add("first");
+        strings.add("second");
+        strings.add("third");
+        strings.set(3, "cat");
     }
 }

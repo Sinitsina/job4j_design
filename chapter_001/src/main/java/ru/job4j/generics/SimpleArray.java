@@ -1,5 +1,6 @@
 package ru.job4j.generics;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -17,17 +18,17 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void set(int index, T model) {
-        Objects.checkIndex(index, data.length);
+        Objects.checkIndex(index, ind);
         data[index] = model;
 
     }
 
-    public void remove(int index) {
-        Objects.checkIndex(index, data.length);
-        for (int i = index; i < data.length; i++) {
-            data[i - 1] = data[i];
-            data[i] = null;
-        }
+    public SimpleArray<T> remove(int index) {
+        Objects.checkIndex(index, ind);
+        T[] result = (T[]) new Object[data.length - 1];
+        System.arraycopy(data, 0, result, 0, index);
+        System.arraycopy(data, index + 1, result, index, data.length - 1 - index);
+        return new SimpleArray<>(result);
     }
 
     public T get(int index) {
@@ -43,7 +44,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return currentIndex < data.length && data[currentIndex] != null;
+                return currentIndex < ind && data[currentIndex] != null;
             }
 
             @Override
