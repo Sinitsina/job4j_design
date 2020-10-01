@@ -12,6 +12,10 @@ public class SimpleArray<T> implements Iterable<T> {
         this.data = data;
     }
 
+    public SimpleArray() {
+        this.data = (T[]) new Object[10];
+    }
+
     public void add(T model) {
         Objects.checkIndex(ind, data.length);
         data[ind++] = model;
@@ -23,16 +27,14 @@ public class SimpleArray<T> implements Iterable<T> {
 
     }
 
-    public SimpleArray<T> remove(int index) {
+    public void remove(int index) {
         Objects.checkIndex(index, ind);
-        T[] result = (T[]) new Object[data.length - 1];
-        System.arraycopy(data, 0, result, 0, index);
-        System.arraycopy(data, index + 1, result, index, data.length - 1 - index);
-        return new SimpleArray<>(result);
+        System.arraycopy(data, index + 1, data, index, data.length - 1 - index);
+        data[ind--] = null;
     }
 
     public T get(int index) {
-        Objects.checkIndex(index, data.length);
+        Objects.checkIndex(index, ind);
         return data[index];
     }
 
@@ -44,7 +46,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return currentIndex < ind && data[currentIndex] != null;
+                return currentIndex < ind;
             }
 
             @Override
