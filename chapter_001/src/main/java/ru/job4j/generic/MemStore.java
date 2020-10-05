@@ -3,7 +3,7 @@ package ru.job4j.generic;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class MemStore <T extends Base> implements Store<T> {
+public final class MemStore<T extends Base> implements Store<T> {
     private final List<T> mem = new ArrayList<>();
 
     @Override
@@ -30,7 +30,6 @@ public final class MemStore <T extends Base> implements Store<T> {
         }
         return rsl;
     }
-
 
     @Override
     public boolean delete(String id) {
