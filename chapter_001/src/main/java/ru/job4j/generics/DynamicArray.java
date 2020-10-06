@@ -20,11 +20,15 @@ public class DynamicArray<T> implements Iterable<T> {
         return (T) container[index];
     }
 
-    public void add(T model) {
-        if (ind > 9) {
+    public void checkCapacity() {
+        if (ind > container.length - 1) {
             int newCapacity = ind + (ind >> 1);
             container = Arrays.copyOf(container, newCapacity);
         }
+    }
+
+    public void add(T model) {
+        checkCapacity();
         Objects.checkIndex(ind, container.length);
         container[ind++] = model;
         modCount++;
