@@ -26,7 +26,7 @@ public class SimpleLinkedTest {
         assertThat(rsl, is("first"));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void whenGetEmpty() {
         SimpleLinked<String> array = new SimpleLinked<>();
         array.get(0);
