@@ -3,8 +3,8 @@ import java.util.*;
 
 public class SimpleLinked<E> implements Iterable<E> {
     private static class Node<E> {
-        E value;
-        Node<E> next;
+        private E value;
+        private Node<E> next;
 
         Node(E value) {
             this.value = value;
@@ -16,13 +16,14 @@ public class SimpleLinked<E> implements Iterable<E> {
     private int modCount;
 
     public void add(E value) {
-        if(head == null)
+        if (head == null) {
             head = new Node<>(value);
-        else {
+        } else {
             Node<E> temp = head;
-            while (temp.next != null)
+            while (temp.next != null) {
                 temp = temp.next;
-            temp.next = new Node<>(value);
+                temp.next = new Node<>(value);
+            }
         }
         size++;
         modCount++;
@@ -31,7 +32,7 @@ public class SimpleLinked<E> implements Iterable<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
         Node<E> node = head;
-        while(index > 0) {
+        while (index > 0) {
             node = node.next;
             index--;
         }
@@ -43,26 +44,23 @@ public class SimpleLinked<E> implements Iterable<E> {
     }
 
     private class LinkedListIterator implements Iterator<E> {
-        private Node<E> lastReturned = head;
-        private Node<E> next;
-        private int nextIndex = 0;
+        private Node<E> current = head;
         private int expectedModCount = modCount;
 
         public boolean hasNext() {
-            return nextIndex < size;
+            return current != null;
         }
 
         public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            if (modCount != expectedModCount){
+            if (modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            lastReturned = head;
-            next = head.next;
-            nextIndex++;
-            return lastReturned.value;
+            E value = current.value;
+            current = current.next;
+            return value;
         }
     }
 }
