@@ -7,12 +7,13 @@ public class DynamicArray<T> implements Iterable<T> {
     private int ind = 0;
     private int modCount = 0;
 
-    public DynamicArray(Object[] container) {
-        this.container = container;
+    public DynamicArray(int capacity) {
+        this.container = new Object[capacity];
     }
 
     public DynamicArray() {
-        this.container = new Object[10];
+        int DEFAULT_CAPACITY = 10;
+        this.container = new Object[DEFAULT_CAPACITY];
     }
 
     public T get(int index) {
