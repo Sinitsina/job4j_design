@@ -3,6 +3,7 @@ package ru.job4j.generics;
 import java.util.*;
 
 public class DynamicArray<T> implements Iterable<T> {
+    private final static int DEFAULT_CAPACITY = 10;
     private Object[] container;
     private int ind = 0;
     private int modCount = 0;
@@ -12,7 +13,6 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     public DynamicArray() {
-        int DEFAULT_CAPACITY = 10;
         this.container = new Object[DEFAULT_CAPACITY];
     }
 
