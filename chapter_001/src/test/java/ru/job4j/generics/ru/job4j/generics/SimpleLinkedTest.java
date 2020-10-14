@@ -1,6 +1,7 @@
 package ru.job4j.generics.ru.job4j.generics;
 
 import org.junit.Test;
+import ru.job4j.collection.SimpleLinked;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
