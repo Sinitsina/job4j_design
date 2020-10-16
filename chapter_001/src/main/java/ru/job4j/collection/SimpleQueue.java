@@ -6,26 +6,15 @@ public class SimpleQueue<T> {
     private int size;
 
     public T poll() {
-        int index = 0;
-        while (index < size) {
-            out.push(in.pop());
-            index++;
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
         }
-        size--;
-
-        T res = out.pop();
-        index = 0;
-
-        while (index < size) {
-            in.push(out.pop());
-            index++;
-        }
-
-        return res;
+        return out.pop();
     }
 
     public void push(T value) {
         in.push(value);
-        size++;
     }
 }
