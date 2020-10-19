@@ -1,19 +1,19 @@
-package ru.job4j.generics;
-
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
+package ru.job4j.collection;
 
 import org.junit.Test;
-import ru.job4j.collection.DynamicArray;
+import ru.job4j.collection.SimpleLinked;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DynamicArrayTest {
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
+
+public class SimpleLinkedTest {
     @Test
     public void whenAddThenGet() {
-        DynamicArray<String> array = new DynamicArray<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         String rsl = array.get(0);
         assertThat(rsl, is("first"));
@@ -21,7 +21,7 @@ public class DynamicArrayTest {
 
     @Test
     public void whenAddThenIt() {
-        DynamicArray<String> array = new DynamicArray<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         String rsl = array.iterator().next();
         assertThat(rsl, is("first"));
@@ -29,35 +29,28 @@ public class DynamicArrayTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void whenGetEmpty() {
-        DynamicArray<String> array = new DynamicArray<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.get(0);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void whenGetOutBound() {
-        DynamicArray<String> array = new DynamicArray<>();
-        array.add("first");
-        array.get(1);
     }
 
     @Test(expected = NoSuchElementException.class)
     public void whenGetEmptyFromIt() {
-        DynamicArray<String> array = new DynamicArray<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.iterator().next();
     }
 
     @Test(expected = ConcurrentModificationException.class)
     public void whenCorruptedIt() {
-        DynamicArray<String> array = new DynamicArray<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         Iterator<String> it = array.iterator();
         array.add("second");
         it.next();
     }
 
-    @Test
+    /*@Test
     public void whenAddMoreThanTenElementsThenGetLast() {
-        DynamicArray<String> array = new DynamicArray<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("one");
         array.add("two");
         array.add("three");
@@ -71,6 +64,6 @@ public class DynamicArrayTest {
         array.add("eleven");
         String rsl = array.get(10);
         assertThat(rsl, is("eleven"));
-    }
+    }*/
 
 }
