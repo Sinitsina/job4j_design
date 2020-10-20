@@ -1,5 +1,6 @@
 package ru.job4j.collection;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
@@ -11,16 +12,17 @@ public class SimpleSetTest {
         SimpleSet<String> strings = new SimpleSet<>();
         strings.add("first");
         strings.add("second");
-        String rsl = strings.get(0);
-        assertThat(rsl, is("first"));
+        boolean rsl = strings.contains("first");
+        assertThat(rsl, is(false));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test
     public void whenAddTwoEqualThenGet() {
         SimpleSet<String> strings = new SimpleSet<>();
         strings.add("first");
         strings.add("second");
         strings.add("first");
-        String rsl = strings.get(2);
+        boolean rsl = strings.contains("first");
+        assertThat(rsl, is(false));
     }
 }
