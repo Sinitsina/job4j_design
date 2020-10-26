@@ -11,7 +11,7 @@ public class Store {
         map.put(u1, new Object());
         map.put(u2, new Object());
 
-        map.entrySet().stream().forEach(e-> System.out.println(e));
+        map.entrySet().stream().forEach(e -> System.out.println(e));
     }
 
 }
