@@ -30,6 +30,11 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, children, birthday);
+        int result = 17;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + Integer.hashCode(children);
+        result = 31 * result + birthday.hashCode();
+        return result;
     }
+
 }
