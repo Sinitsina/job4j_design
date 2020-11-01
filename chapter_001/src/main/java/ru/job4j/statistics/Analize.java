@@ -7,36 +7,31 @@ public class Analize {
         int deleted = 0;
         int added = 0;
         int changed = 0;
-        boolean res = false;
 
-        Set<User> difference = new HashSet<>(previous);
+        Map<Integer, User> difference = new HashMap<>();
+        for (User i : previous) {
+            difference.put(i.getId(), i);
+        }
 
         for (User curUser : current) {
-            if (difference.contains(curUser)) {
-                difference.remove(curUser);
+            if (difference.containsKey(curUser.getId())
+                    && difference.containsValue(curUser)) {
+                difference.remove(curUser.getId());
+            } else if (difference.containsKey(curUser.getId())
+                    && !difference.containsValue(curUser)) {
+                changed++;
+                difference.remove(curUser.getId());
             } else {
-                if (difference.isEmpty()) {
-                    difference.add(curUser);
-                } else {
-                    Set<User> copy = new HashSet<>(difference);
-                    for (User differUser : copy) {
-                        if (differUser.getId() == curUser.getId()) {
-                            changed++;
-                            difference.remove(differUser);
-                            res = true;
-                        }
-                    }
-                    if (!res) {
-                        difference.add(curUser);
-                    }
-                }
+                difference.put(curUser.getId(), curUser);
             }
         }
 
-        for (User difUser : difference) {
-            if (previous.contains(difUser)) {
+        for (Integer id : difference.keySet()) {
+            User checked = difference.get(id);
+            if (previous.contains(checked)) {
                 deleted++;
-            } else {
+            }
+            if (current.contains(checked)) {
                 added++;
             }
         }
