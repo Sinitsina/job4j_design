@@ -9,32 +9,19 @@ public class Analize {
         int changed = 0;
 
         Map<Integer, User> difference = new HashMap<>();
-        for (User i : previous) {
-            difference.put(i.getId(), i);
+        for (User currUser : current) {
+            difference.put(currUser.getId(), currUser);
         }
 
-        for (User curUser : current) {
-            if (difference.containsKey(curUser.getId())
-                    && difference.containsValue(curUser)) {
-                difference.remove(curUser.getId());
-            } else if (difference.containsKey(curUser.getId())
-                    && !difference.containsValue(curUser)) {
-                changed++;
-                difference.remove(curUser.getId());
-            } else {
-                difference.put(curUser.getId(), curUser);
-            }
-        }
-
-        for (Integer id : difference.keySet()) {
-            User checked = difference.get(id);
-            if (previous.contains(checked)) {
+        for (User prevUser : previous) {
+            if (!difference.containsKey(prevUser.getId())) {
                 deleted++;
+            } else if (!difference.get(prevUser.getId()).equals(prevUser)) {
+                changed++;
             }
-            if (current.contains(checked)) {
-                added++;
-            }
+            difference.put(prevUser.getId(), prevUser);
         }
+        added = difference.size() - previous.size();
         return new Info(added, changed, deleted);
     }
 }
