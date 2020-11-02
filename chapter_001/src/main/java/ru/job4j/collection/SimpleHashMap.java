@@ -1,8 +1,11 @@
 package ru.job4j.collection;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleHashMap<K, V> {
+public class SimpleHashMap<K, V> implements Iterable {
     class Entry<K, V> {
         private K key;
         private V value;
@@ -47,11 +50,13 @@ public class SimpleHashMap<K, V> {
     private Entry<K, V>[] values = new Entry[DEFAULT_CAPACITY];
     private int size;
     private double loadFactor = 0.75;
+    private int modCount = 0;
 
     public boolean insert(K key, V value) {
     boolean res = true;
         if (key == null) {
             putForNullKey(value);
+            modCount++;
         } else {
             int hash = SimpleHashMap.hash(key);
             int index = SimpleHashMap.indexFor(hash, values.length);
@@ -65,6 +70,7 @@ public class SimpleHashMap<K, V> {
                 }
             }
             addEntry(hash, key, value, index);
+            modCount++;
         }
         return res;
     }
@@ -120,38 +126,76 @@ public class SimpleHashMap<K, V> {
     }
 
     public V get(K key) {
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] != null) {
+        int index;
+        if (key == null) {
+            index = indexFor(0, values.length);
+        } else {
+            index = indexFor(key.hashCode(), values.length);
+        }
+            if (values[index] != null) {
 
-                if (values[i].getKey() == null) {
-                    return values[i].getValue();
+                if (values[index].getKey() == null) {
+                    return values[index].getValue();
                 }
-                if (values[i].getKey().equals(key)) {
-                    return values[i].getValue();
+                if (values[index].getKey().equals(key)) {
+                    return  values[index].getValue();
                 }
             }
-        }
-        return null;
+            return null;
     }
 
     public boolean delete(K key) {
         boolean res = false;
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] != null) {
-                if (values[i].getKey().equals(key)) {
-                    values[i] = null;
-                    size--;
-                    res = true;
-                    break;
-                }
+        int index;
+        if (key == null) {
+            index = indexFor(0, values.length);
+        } else {
+            index = indexFor(key.hashCode(), values.length);
+        }
+        if (values[index] != null) {
+            if (values[index].getKey().equals(key)) {
+                values[index] = null;
+                size--;
+                res = true;
             }
         }
-
+        modCount++;
         return res;
     }
 
     public int size() {
         return size;
+    }
+
+    @Override
+    public Iterator iterator() {
+        int expectedModCount = modCount;
+        Iterator iterator = new Iterator<>() {
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                while (values[currentIndex] == null && currentIndex < values.length - 1) {
+                    currentIndex++;
+                }
+                return values[currentIndex] != null;
+            }
+
+            @Override
+            public V next() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                V el = values[currentIndex].getValue();
+                currentIndex++;
+                return el;
+            }
+        };
+        return iterator;
     }
 }
 
