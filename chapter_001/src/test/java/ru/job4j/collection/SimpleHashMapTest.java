@@ -88,4 +88,11 @@ public class SimpleHashMapTest {
         assertThat(rsl, is(2));
     }
 
+    @Test
+    public void whenAddThenIt() {
+        SimpleHashMap<Integer, String> array = new SimpleHashMap<>();
+        array.insert(1, "first");
+        var rsl = array.iterator().next();
+        assertThat(rsl, is("first"));
+    }
 }
