@@ -19,9 +19,9 @@ public class Analize {
             } else if (!difference.get(prevUser.getId()).equals(prevUser)) {
                 changed++;
             }
-            difference.put(prevUser.getId(), prevUser);
         }
-        added = difference.size() - previous.size();
+        added = Math.abs(previous.size() - current.size() - deleted);
+
         return new Info(added, changed, deleted);
     }
 }
