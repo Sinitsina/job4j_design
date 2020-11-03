@@ -56,22 +56,23 @@ public class SimpleHashMap<K, V> implements Iterable {
     boolean res = true;
         if (key == null) {
             putForNullKey(value);
-            modCount++;
+        } else if (size == 0) {
+            int hash = SimpleHashMap.hash(key);
+            int index = SimpleHashMap.indexFor(hash, values.length);
+            addEntry(hash, key, value, index);
         } else {
             int hash = SimpleHashMap.hash(key);
             int index = SimpleHashMap.indexFor(hash, values.length);
-
-            for (Entry<K, V> e = values[index]; e != null; e = e.next) {
-                K obj;
-                obj = e.key;
-                if (e.hash == hash && (obj == key || key.equals(obj))) {
-                    e.value = value;
-                    res = false;
-                }
+            Entry<K, V> e = values[index];
+            if (e != null && e.hash == hash
+                    && (e.key == key || key.equals(e.key))) {
+                e.value = value;
+                res = false;
+            } else {
+                addEntry(hash, key, value, index);
             }
-            addEntry(hash, key, value, index);
-            modCount++;
         }
+        modCount++;
         return res;
     }
 
