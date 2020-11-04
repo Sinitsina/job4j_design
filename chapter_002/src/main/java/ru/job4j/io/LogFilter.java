@@ -15,6 +15,7 @@ public class LogFilter {
                     result.add(line);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
