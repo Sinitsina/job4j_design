@@ -133,7 +133,7 @@ public class SimpleHashMap<K, V> implements Iterable {
         } else {
             index = indexFor(key.hashCode(), values.length);
         }
-            if (values[index] != null) {
+            //if (values[index] != null) {
 
                 if (values[index].getKey() == null) {
                     return values[index].getValue();
@@ -141,7 +141,7 @@ public class SimpleHashMap<K, V> implements Iterable {
                 if (values[index].getKey().equals(key)) {
                     return  values[index].getValue();
                 }
-            }
+            //}
             return null;
     }
 
