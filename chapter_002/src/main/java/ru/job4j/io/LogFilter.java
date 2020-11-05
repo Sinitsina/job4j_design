@@ -7,14 +7,11 @@ public class LogFilter {
     public static List<String> filter(String file) {
         List<String> result = new ArrayList<>();
         try (BufferedReader in = new BufferedReader (new FileReader(file))) {
-            List<String> lines = new ArrayList<>();
-            in.lines().forEach(lines::add);
-            for (String line : lines) {
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
                 if (line.contains("404")) {
                     result.add(line);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
