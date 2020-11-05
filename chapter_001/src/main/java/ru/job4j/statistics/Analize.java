@@ -20,7 +20,8 @@ public class Analize {
                 changed++;
             }
         }
-        added = Math.abs(previous.size() - current.size() - deleted);
+
+        added = current.size() + deleted - previous.size();
 
         return new Info(added, changed, deleted);
     }
