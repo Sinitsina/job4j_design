@@ -8,7 +8,7 @@ public class EvenNumberFile {
             StringBuilder numbers = new StringBuilder();
             int read;
             while ((read = in.read()) != -1) {
-                numbers.append((char)read);
+                numbers.append((char) read);
             }
             String[] lines = numbers.toString().split(System.lineSeparator());
             for (String line : lines) {
@@ -20,7 +20,5 @@ public class EvenNumberFile {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }
