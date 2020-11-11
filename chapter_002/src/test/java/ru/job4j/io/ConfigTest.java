@@ -9,6 +9,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithComment() {
+        //String path = "/Users/olga/IdeaProjects/job4j_design/chapter_002.app.properties";
         String path = "./app.properties";
         Config config = new Config(path);
         config.load();
