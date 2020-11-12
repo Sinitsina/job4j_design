@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class Analysis {
-    public void unavailable(String source, String target) {
+    public static void unavailable(String source, String target) {
         String start = null;
         String finish = null;
         ArrayList<String> result = new ArrayList<>();
