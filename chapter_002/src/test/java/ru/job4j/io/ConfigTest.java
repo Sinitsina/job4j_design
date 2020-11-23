@@ -20,7 +20,7 @@ public class ConfigTest {
     }
 
     @Test
-    public void whenPairWithoutComment() {
+    public void whenPairWithCommentOtherFile() {
         String path = "./app2.properties";
         Config config = new Config(path);
         config.load();

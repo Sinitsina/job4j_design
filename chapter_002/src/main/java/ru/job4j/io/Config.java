@@ -13,11 +13,7 @@ public class Config {
 
     public void load() {
         try {
-            Class cls = Class.forName("Config");
-            ClassLoader classLoader = cls.getClassLoader();
-
-            //ClassLoader classLoader = this.getClass().getClassLoader();
-
+            ClassLoader classLoader = getClass().getClassLoader();
             InputStream i = classLoader.getResourceAsStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(i));
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
@@ -33,6 +29,10 @@ public class Config {
         }
     }
 
+    public void print() {
+        this.values.forEach((key, value) -> System.out.println(key + " " + value));
+    }
+
     public String value(String key) {
         return values.get(key);
     }
@@ -40,7 +40,8 @@ public class Config {
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
-        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
+        try (BufferedReader read = new BufferedReader(new FileReader(
+                "./chapter_002/src/main/resources/" + this.path))) {
             read.lines().forEach(out::add);
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,6 +50,8 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("app.properties"));
+        final Config x = new Config("app.properties");
+        x.load();
+        x.print();
     }
 }
