@@ -17,6 +17,10 @@ public class ArgsName {
         }
         for (String line : args) {
             String[] words = line.split("=");
+            if (args.length < 2) {
+                throw new IllegalArgumentException(
+                        "Failed to find configured root. Check the number of elements");
+            }
             values.put(words[0].substring(1), words[1]);
         }
     }
