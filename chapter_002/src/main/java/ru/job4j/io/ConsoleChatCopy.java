@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 public class ConsoleChatCopy {
-    private final String botAnswers;
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
+    private final String botAnswers;
     private final String path;
 
     public ConsoleChatCopy(String path, String botAnswers) {
@@ -32,21 +32,21 @@ public class ConsoleChatCopy {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String s = reader.readLine();
             while (s != null) {
-                ConsoleChatCopy.whiteDialog(s);
+                ConsoleChatCopy.whiteDialog(s, path);
                 if (s.equals(STOP)) {
                     s = reader.readLine();
                     while (!s.equals(CONTINUE)) {
-                        ConsoleChatCopy.whiteDialog(s);
+                        ConsoleChatCopy.whiteDialog(s, path);
                         s = reader.readLine();
                     }
-                    ConsoleChatCopy.whiteDialog(s);
+                    ConsoleChatCopy.whiteDialog(s, path);
                 }  else if (s.equals(OUT)) {
                     System.out.println("Чат окончен");
                     break;
                 } else {
                     String res = ConsoleChatCopy.botAnswer(answers);
                     System.out.println(res);
-                    ConsoleChatCopy.whiteDialog(res);
+                    ConsoleChatCopy.whiteDialog(res, path);
                 }
                 s = reader.readLine();
             }
@@ -61,7 +61,7 @@ public class ConsoleChatCopy {
         return answers.get(rand.nextInt(answers.size()));
     }
 
-    private static void whiteDialog(String line) {
+    private static void whiteDialog(String line, String path) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt",
                 Charset.forName("WINDOWS-1251"), true))) {
             writer.append(line).append(System.lineSeparator());
@@ -71,7 +71,8 @@ public class ConsoleChatCopy {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("/Users/olga/IdeaProjects/job4j_design/log.txt", "/Users/olga/IdeaProjects/job4j_design/chapter_002/botAnswers.txt");
+        ConsoleChat cc = new ConsoleChat("/Users/olga/IdeaProjects/job4j_design/log.txt",
+                "/Users/olga/IdeaProjects/job4j_design/chapter_002/botAnswers.txt");
         cc.run();
     }
 }
