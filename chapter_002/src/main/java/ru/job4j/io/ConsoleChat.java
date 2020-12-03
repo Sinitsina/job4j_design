@@ -21,7 +21,6 @@ public class ConsoleChat {
 
     public void run() {
         List<String> answers = new ArrayList<>();
-        List<String> dialog = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(botAnswers, CHARSET))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 answers.add(line);
@@ -31,28 +30,30 @@ public class ConsoleChat {
         }
         System.out.println("Введите вопрос:");
 
-            String s = ConsoleChat.reading();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            String s = reader.readLine();
             while (s != null) {
-                dialog.add(s);
+                ConsoleChat.whiteDialog(s, path);
                 if (s.equals(STOP)) {
-                    s = ConsoleChat.reading();
+                    s = reader.readLine();
                     while (!s.equals(CONTINUE)) {
-                        dialog.add(s);
-                        s = ConsoleChat.reading();
+                        ConsoleChat.whiteDialog(s, path);
+                        s = reader.readLine();
                     }
-                    dialog.add(s);
-                } else if (s.equals(OUT)) {
+                    ConsoleChat.whiteDialog(s, path);
+                }  else if (s.equals(OUT)) {
                     System.out.println("Чат окончен");
                     break;
                 } else {
                     String res = ConsoleChat.botAnswer(answers);
                     System.out.println(res);
-                    dialog.add(res);
+                    ConsoleChat.whiteDialog(res, path);
                 }
-                s = ConsoleChat.reading();
+                s = reader.readLine();
             }
-
-        ConsoleChat.writing(dialog, path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static String botAnswer(List<String> answers) {
@@ -60,23 +61,10 @@ public class ConsoleChat {
         return answers.get(rand.nextInt(answers.size()));
     }
 
-    private static String reading() {
-        String s = null;
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            s = reader.readLine();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return s;
-    }
-
-    private static void writing(List<String> dialog, String path) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path,
-                CHARSET, true))) {
-            for (String line: dialog) {
-                writer.append(line).append(System.lineSeparator());
-            }
+    private static void whiteDialog(String line, String path) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt",
+                Charset.forName("WINDOWS-1251"), true))) {
+            writer.append(line).append(System.lineSeparator());
         } catch (Exception e) {
             e.printStackTrace();
         }
