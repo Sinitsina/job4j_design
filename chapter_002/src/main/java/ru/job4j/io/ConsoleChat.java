@@ -1,5 +1,8 @@
 package ru.job4j.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import java.util.Random;
 
 public class ConsoleChat {
     public static final Charset CHARSET = Charset.forName("WINDOWS-1251");
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
@@ -45,7 +49,7 @@ public class ConsoleChat {
                 s = reader.readLine();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in log", e);
         }
 
         ConsoleChat.writing(dialog, path);
@@ -63,7 +67,7 @@ public class ConsoleChat {
                 answers.add(line);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in log", e);
         }
         return answers;
     }
@@ -75,13 +79,13 @@ public class ConsoleChat {
                 writer.append(line).append(System.lineSeparator());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in log", e);
         }
     }
 
     public static void main(String[] args) {
         ConsoleChat cc = new ConsoleChat("/Users/olga/IdeaProjects/job4j_design/log.txt",
-                "/Users/olga/IdeaProjects/job4j_design/chapter_002/botAnswers.txt");
+                "/Users/olga/IdeaProjects/botAnswers.txt");
         cc.run();
     }
 }
