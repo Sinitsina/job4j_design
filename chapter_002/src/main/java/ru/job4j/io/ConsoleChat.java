@@ -20,6 +20,43 @@ public class ConsoleChat {
     }
 
     public void run() {
+        List<String> answers = ConsoleChat.readAnswers(botAnswers);
+        List<String> dialog = new ArrayList<>();
+        System.out.println("Введите вопрос:");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            String s = reader.readLine();
+            while (s != null) {
+                dialog.add(s);
+                if (s.equals(STOP)) {
+                    s = reader.readLine();
+                    while (!s.equals(CONTINUE)) {
+                        dialog.add(s);
+                        s = reader.readLine();
+                    }
+                    dialog.add(s);
+                }  else if (s.equals(OUT)) {
+                    System.out.println("Чат окончен");
+                    break;
+                } else {
+                    String res = ConsoleChat.botAnswer(answers);
+                    System.out.println(res);
+                }
+                s = reader.readLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ConsoleChat.writing(dialog, path);
+    }
+
+    private static String botAnswer(List<String> answers) {
+        Random rand = new Random();
+        return answers.get(rand.nextInt(answers.size()));
+    }
+
+    private static List<String> readAnswers(String botAnswers) {
         List<String> answers = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(botAnswers, CHARSET))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
@@ -28,43 +65,15 @@ public class ConsoleChat {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Введите вопрос:");
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            String s = reader.readLine();
-            while (s != null) {
-                ConsoleChat.whiteDialog(s, path);
-                if (s.equals(STOP)) {
-                    s = reader.readLine();
-                    while (!s.equals(CONTINUE)) {
-                        ConsoleChat.whiteDialog(s, path);
-                        s = reader.readLine();
-                    }
-                    ConsoleChat.whiteDialog(s, path);
-                }  else if (s.equals(OUT)) {
-                    System.out.println("Чат окончен");
-                    break;
-                } else {
-                    String res = ConsoleChat.botAnswer(answers);
-                    System.out.println(res);
-                    ConsoleChat.whiteDialog(res, path);
-                }
-                s = reader.readLine();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return answers;
     }
 
-    private static String botAnswer(List<String> answers) {
-        Random rand = new Random();
-        return answers.get(rand.nextInt(answers.size()));
-    }
-
-    private static void whiteDialog(String line, String path) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt",
+    private static void writing(List<String> dialog, String path) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path,
                 Charset.forName("WINDOWS-1251"), true))) {
-            writer.append(line).append(System.lineSeparator());
+            for (String line: dialog) {
+                writer.append(line).append(System.lineSeparator());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

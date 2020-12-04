@@ -16,8 +16,18 @@ public class UsageLog4j {
         char character = 'a';
         boolean result = true;
 
-        LOG.debug("Numbers info: byte = {}, short = {}, int = {}, long = {}", number1, number2, number3, number4);
-        LOG.debug("Information: float = {}, double = {}, char : {}, enabled : {}", value1, value2, character, result);
+        LOG.debug("Numbers info: "
+                        + "byte = {}, "
+                        + "short = {}, "
+                        + "int = {}, "
+                        + "long = {}",
+                number1, number2, number3, number4);
+        LOG.debug("Information: "
+                        + "float = {}, "
+                        + "double = {}, "
+                        + "char : {}, "
+                        + "enabled : {}",
+                value1, value2, character, result);
 
     }
 }
