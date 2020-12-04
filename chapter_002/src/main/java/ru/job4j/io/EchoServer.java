@@ -34,7 +34,6 @@ public class EchoServer {
                     } else if (!line.contains("Hello") && !line.contains("msg=Exit")){
                         res = "What.";
                     }
-
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write(res.getBytes(StandardCharsets.UTF_8));
                 }
