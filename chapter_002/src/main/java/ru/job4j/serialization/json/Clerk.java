@@ -7,6 +7,10 @@ public class Clerk {
         this.position = position;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
     @Override
     public String toString() {
         return "Clerk{"
