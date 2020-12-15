@@ -12,5 +12,6 @@ update rooms set vacant = 'false';
 select *
 from rooms;
 delete from rooms;
+
 select *
 from rooms;
