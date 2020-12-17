@@ -43,7 +43,7 @@ public class Store {
                         + "\"quantity of clerks\":10,"
                         + "\"Seller\":"
                         + "{"
-                        + "\"position\":\"Seller\""
+                        + "\"position\":\"Seller\","
                         + "\"name\":\"John\""
                         + "},"
                         + "\"departments\":"
