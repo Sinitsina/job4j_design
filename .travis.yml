@@ -19,6 +19,14 @@ notifications:
     on_success: never # default: change
     on_failure: always # defa,ult: always
 
+# Start PostgreSQL
+services:
+  - postgresql
+
+# Create a database
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
 env:
   global:
     - CODECOV_TOKEN="1835fdf4-a3b3-496f-8171-c1b46b88eedb"
